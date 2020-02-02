@@ -13,6 +13,21 @@ class TicTacToeNode
   end
 
   def winning_node?(evaluator)
+    # base case: the game is over and we've won
+    if board.over?
+      return board.winner == evaluator
+    end
+
+    # recursive case/inductive step
+    if self.next_mover_mark == evaluator
+      # if we can place any mark that could eventually lead to a win
+      # then this is a winning node
+      self.children.any?{ |node| node.winning_node?(evaluator)}
+    else
+      # if its the opponent's turn, and no matter where they move
+      # we'll be able to force a win, then this is a winning node
+      self.children.all?{ |node| node.winning_node?(evaluator)}
+    end
   end
 
   # This method generates an array of all moves that can be made after

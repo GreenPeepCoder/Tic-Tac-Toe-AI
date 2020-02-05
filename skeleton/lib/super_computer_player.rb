@@ -8,6 +8,12 @@ class SuperComputerPlayer < ComputerPlayer
         return child.prev_move_pos
       end
     end
+    tttNode.children.each do |child|
+      if child.losing_node?(mark) == false
+        return child.prev_move_pos
+      end
+    end
+    raise error
   end
 end
 
